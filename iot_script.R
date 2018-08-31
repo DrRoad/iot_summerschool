@@ -3,8 +3,6 @@
 # 18-08-31
 # Version 0.1
 
-
-
 # libraries
 library(readr)
 library(lubridate)
@@ -41,7 +39,13 @@ max_date <- max(ECOTRONsub$Date)
 min_date <- min(ECOTRONsub$Date)
 
 # Temperatur
-plot(ECOTRONsub$a ~ ECOTRONsub$Date, type="l", col="green", xlim=c(min_date, max_date), format="%Y-%m-%d %H:%M:%S")
-add(subset_ECOTRON$a~subset_ECOTRON$Date, type="l", col="red")
+plot(ECOTRONsub$a ~ ECOTRONsub$Date, type="l", 
+     col="green", xlim=c(min_date, max_date),format="%Y-%m-%d %H:%M:%S")
+lines(x,y, col="red")
+lines(x,y, col="blue")
+legend("topright", title="CO2 Measurement", c("ECO1", "ECO2", "ECO3"), fill=c("green","red","blue"), 
+        bg = "gray90", cex=0.8, inset=.05)
 
-str(ECOTRONsub)
+
+
+
