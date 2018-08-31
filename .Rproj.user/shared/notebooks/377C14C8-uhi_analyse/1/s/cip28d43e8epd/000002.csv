@@ -1,5 +1,0 @@
-"0","```r
-source('./func/uhi_dwd_read_func.R')
-source('./func/uhi_dwd_clean_func.R')
-source('./func/uhi_intensity_func.R')
-```"
