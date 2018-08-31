@@ -35,11 +35,13 @@ plot(ECOTRON$a~ECOTRON$Date, type="l", col="green")
 ECOTRONsub<- subset(ECOTRON, ECOTRON$Date >='2018-08-31 13:15:02' &
                       ECOTRON$Date <= '2018-08-31 14:00:36')
 
-
 ### Plot
 
+max_date <- max(ECOTRONsub$Date)
+min_date <- min(ECOTRONsub$Date)
+
 # Temperatur
-plot(ECOTRONsub$a ~ ECOTRONsub$Date, type="l", col="green")
+plot(ECOTRONsub$a ~ ECOTRONsub$Date, type="l", col="green", xlim=c(min_date, max_date), format="%Y-%m-%d %H:%M:%S")
 add(subset_ECOTRON$a~subset_ECOTRON$Date, type="l", col="red")
 
-
+str(ECOTRONsub)
