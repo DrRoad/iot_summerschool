@@ -13,7 +13,7 @@ library(lubridate)
 ### Import CSV Data ###
 # TODO: change location
 
-location <- "data/feed.csv"
+location <- "data/feed_Kathi.csv"
 ECOTRON <- read_csv(location)
 ##############################################################
 
@@ -35,9 +35,6 @@ plot(ECOTRON$a~ECOTRON$Date, type="l", col="green")
 ECOTRONsub<- subset(ECOTRON, ECOTRON$Date >='2018-08-31 13:15:02' &
                       ECOTRON$Date <= '2018-08-31 14:00:36')
 
-ECOTRONsub$Date <- as.POSIXct(ECOTRONsub$Date, "%Y-%m-%d %H:%M:%S", tz="UTC")
-# Change timezone
-ECOTRONsub$Date <- with_tz(ECOTRONsub$Date, "CET")
 
 ### Plot
 
