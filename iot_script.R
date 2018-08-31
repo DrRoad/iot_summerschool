@@ -6,13 +6,17 @@
 # libraries
 library(readr)
 library(lubridate)
-
+library(httr)
 
 ### Import CSV Data ###
 # TODO: change location
 
-location <- "data/feed_Kathi.csv"
-ECOTRON <- read_csv(location)
+# location <- "data/feed_Kathi.csv"
+ECOTRON1 <- read.csv(url("http://thingspeak.umwelt-campus.de/channels/318/feed.csv"))
+ECOTRON2 <- read.csv(url("http://thingspeak.umwelt-campus.de/channels/319/feed.csv"))
+ECOTRON3 <- read.csv(url("http://thingspeak.umwelt-campus.de/channels/320/feed.csv"))
+
+
 ##############################################################
 
 ### Name columns #############################################
