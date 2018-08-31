@@ -12,7 +12,7 @@ library(lubridate)
 
 getCSVData <-  function(channel,api_key) {
   # Get CSV File
-  ECOTRON <- read_csv(url(paste("http://thingspeak.umwelt-campus.de/channels/", channel, "/feeds?api_key=", api_key, sep="")))
+  ECOTRON <- read_csv(url(paste("http://thingspeak.umwelt-campus.de/channels/", channel, "/feeds.csv?api_key=", api_key, sep="")))
   
   ### Name columns #############################################
   # TODO: Change dummies: a,b,c... to variables
