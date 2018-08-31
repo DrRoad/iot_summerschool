@@ -1,0 +1,6 @@
+"0","```r
+summary(uhi_intensity$uhi)
+```"
+"1","   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+ -5.200   0.400   1.000   1.672   2.300  10.800    2409 
+"

@@ -1,0 +1,4 @@
+"0","```r
+uhi_intensity  <- uhi_intensity_func(urban=dwd_urban, rural=dwd_rural)
+mean_uhi       <- uhi_intensity_func(urban=dwd_urban, rural=dwd_rural, mean_uhi=TRUE)
+```"

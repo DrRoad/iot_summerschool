@@ -1,0 +1,5 @@
+"0","```r
+print(paste(\"Mittlere UHI:\", round(mean_uhi, digits = 1)))
+```"
+"1","[1] \"Mittlere UHI: 1.7\"
+"
