@@ -3,31 +3,37 @@
 # 18-08-31
 # Version 0.1
 
+install.packages("lubridate")
+
 # libraries
 library(readr)
 library(lubridate)
-library(httr)
 
 ### Import CSV Data ###
 # TODO: change location
 
-# location <- "data/feed_Kathi.csv"
-ECOTRON1 <- read.csv(url("http://thingspeak.umwelt-campus.de/channels/318/feed.csv"))
-ECOTRON2 <- read.csv(url("http://thingspeak.umwelt-campus.de/channels/319/feed.csv"))
-ECOTRON3 <- read.csv(url("http://thingspeak.umwelt-campus.de/channels/320/feed.csv"))
+readData <-  function(channel) {
+  # Get CSV File
+  ECOTRON <- read.csv(url(paste("http://thingspeak.umwelt-campus.de/channels/", channel, "/feed.csv", sep="")))
+  
+  ### Name columns #############################################
+  # TODO: Change dummies: a,b,c... to variables
+  colnames(ECOTRON) <- c("Date","Entry_id", "a", "b", "c", "d", "e", "f", "g", "h")
+  
+  ### Date conversion ##########################################
+  ECOTRON$Date <- as.POSIXct(ECOTRON$Date, "%Y-%m-%d %H:%M:%S", tz="UTC")
+  # Change timezone
+  ECOTRON$Date <- with_tz(ECOTRON$Date, "CET")
+  
+  return(ECOTRON)
+}
 
+# location <- "data/feed_Kathi.csv"
+ECOTRON1 <- readData(318)
+ECOTRON2 <- readData(319)
+ECOTRON3 <- readData(320)
 
 ##############################################################
-
-### Name columns #############################################
-# TODO: Change dummies: a,b,c... to variables
-colnames(ECOTRON) <- c("Date","Entry_id", "a", "b", "c", "d", "e", "f", "g", "h")
-
-### Date conversion ##########################################
-ECOTRON$Date <- as.POSIXct(ECOTRON$Date, "%Y-%m-%d %H:%M:%S", tz="UTC")
-# Change timezone
-ECOTRON$Date <- with_tz(ECOTRON$Date, "CET")
-
 
 ### Slice data, define start date and end date
 # start: 31.8.2018, 6pm
