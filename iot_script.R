@@ -4,6 +4,7 @@
 # Version 0.1
 
 # libraries
+library(readr)
 library(lubridate)
 
 ### Import CSV Data ###
@@ -11,7 +12,7 @@ library(lubridate)
 
 readData <-  function(channel) {
   # Get CSV File
-  ECOTRON <- read.csv(url(paste("http://thingspeak.umwelt-campus.de/channels/", channel, "/feed.csv", sep="")))
+  ECOTRON <- read_csv(url(paste("http://thingspeak.umwelt-campus.de/channels/", channel, "/feed.csv", sep="")))
   
   ### Name columns #############################################
   # TODO: Change dummies: a,b,c... to variables
