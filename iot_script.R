@@ -3,10 +3,7 @@
 # 18-08-31
 # Version 0.1
 
-install.packages("lubridate")
-
 # libraries
-library(readr)
 library(lubridate)
 
 ### Import CSV Data ###
