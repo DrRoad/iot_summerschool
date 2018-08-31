@@ -22,38 +22,37 @@ getCSVData <-  function(channel) {
   ECOTRON$Date <- as.POSIXct(ECOTRON$Date, "%Y-%m-%d %H:%M:%S", tz="UTC")
   # Change timezone
   ECOTRON$Date <- with_tz(ECOTRON$Date, "CET")
-  
+  ECOTRONsub<- subset(ECOTRON, ECOTRON$Date >='2018-08-31 13:15:02' &
+                        ECOTRON$Date <= '2018-08-31 14:00:36')
+
   return(ECOTRON)
 }
 
-processEcotronData <- function(ECOTRON) {
+plotEcotronData <- function(ECOTRON1,ECOTRON2, ECOTRON3) {
   ### Slice data, define start date and end date
   # start: 31.8.2018, 6pm
   # end: 1.9.2018, 9am
   # TODO: Change actual start and end date
-  plot(ECOTRON$a~ECOTRON$Date, type="l", col="green")
-  ECOTRONsub<- subset(ECOTRON, ECOTRON$Date >='2018-08-31 13:15:02' &
-                        ECOTRON$Date <= '2018-08-31 14:00:36')
-  
-  ### Plot
-  
-  max_date <- max(ECOTRONsub$Date)
-  min_date <- min(ECOTRONsub$Date)
   
   # Temperatur
-  plot(ECOTRONsub$a ~ ECOTRONsub$Date, type="l", 
-       col="green", xlim=c(min_date, max_date),format="%Y-%m-%d %H:%M:%S")
-  lines(x,y, col="red")
-  lines(x,y, col="blue")
+  plot(ECOTRON1$b ~ ECOTRON1$Date, type="l", 
+       col="green",format="%Y-%m-%d %H:%M:%S")
+  lines(ECOTRON2$b~ECOTRON2$Date, col="red")
+  lines(ECOTRON3$b~ECOTRON3$Date, col="blue")
   legend("topright", title="CO2 Measurement", c("ECO1", "ECO2", "ECO3"), fill=c("green","red","blue"), 
          bg = "gray90", cex=0.8, inset=.05)
 }
 
 ECOTRON1 <- getCSVData(318)
-processEcotronData(ECOTRON1)
-
 ECOTRON2 <- getCSVData(319)
+ECOTRON3 <- getCSVData(320)
+
+
+plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3)
+
+
 processEcotronData(ECOTRON2)
 
-ECOTRON3 <- getCSVData(320)
+
 processEcotronData(ECOTRON3)
+
