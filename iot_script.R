@@ -46,10 +46,10 @@ plotEcotronData <- function(ECOTRON1, ECOTRON2, ECOTRON3, variable, start, end) 
   # Plotting
   # scale hard coded
   plot(ECOTRON1[[variable]] ~ ECOTRON1$Date, type="l", 
-       col="green",format="%Y-%m-%d %H:%M:%S", ylim=c(10,40), xlab="Date, Time", ylab=variable)
+       col="green",format="%Y-%m-%d %H:%M:%S", ylim=c(30,60), xlab="Date, Time", ylab=variable)
   lines(ECOTRON2[[variable]] ~ ECOTRON2$Date, col="red")
   lines(ECOTRON3[[variable]] ~ ECOTRON3$Date, col="blue")
-  legend("topright", title=paste(variable, " Measurement", sep=""), c("ECO1", "ECO2", "ECO3"), fill=c("green","red","blue"), 
+  legend("bottomright", title=paste(variable, " Measurement", sep=""), c("ECO1", "ECO2", "ECO3"), fill=c("green","red","blue"), 
          bg = "gray90", cex=0.8, inset=.05)
 }
 
@@ -61,8 +61,8 @@ ECOTRON2 <- getCSVData(319, "BJT4PQDOKAWQVGAD")
 ECOTRON3 <- getCSVData(320, "G03E8ZGJNU37MVMZ")
 
 # Set in and out dates for all
-start_date <- '2018-09-01 09:00:00'
-end_date <- '2018-09-01 13:00:00'
+start_date <- '2018-09-01 10:45:00'
+end_date <- '2018-09-01 11:15:00'
 
 plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "Temperature", start_date, end_date)
 plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "Humidity", start_date, end_date)
@@ -73,6 +73,17 @@ plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "SoilMoisture", start_date, end_da
 plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "AirQuality", start_date, end_date)
 
 
+start_date <- '2018-09-01 10:45:00'
+end_date <- '2018-09-01 11:15:00'
+ECOTRON2<- subset(ECOTRON2, ECOTRON2$Date >=start_date &
+                    ECOTRON2$Date <= end_date)
 
+png("plot/today.png")
+plot(ECOTRON2$Humidity ~ ECOTRON2$Date, type="l", 
+     col="green",format="%Y-%m-%d %H:%M:%S", ylim=c(10,60), xlab="Date, Time", ylab="")
+lines(ECOTRON2$Temperature ~ ECOTRON2$Date, col="red")
+legend("bottomright", title="Legend", c("Humidity", "Temperature"), fill=c("green","red","blue"), 
+       bg = "gray90", cex=0.8, inset=.01)
+dev.off()
 
 
