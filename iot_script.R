@@ -7,8 +7,7 @@
 library(readr)
 library(lubridate)
 
-### Import CSV Data ###
-# TODO: change location
+### Function: Import CSV Data ###
 
 getCSVData <-  function(channel,api_key) {
   # Get CSV File
@@ -28,22 +27,15 @@ getCSVData <-  function(channel,api_key) {
   # end: 1.9.2018, 9am
   # TODO: Change actual start and end date
   
-  
-  ECOTRONsub<- subset(ECOTRON, ECOTRON$Date >='2018-08-31 13:15:02' &
-                        ECOTRON$Date <= '2018-08-31 14:00:36')
-  
-  # Fix temperatures
-  ECOTRON$Temperature1 <- ECOTRON$b[c(T,T,F)]
-  ECOTRON$Temperature2 <- ECOTRON$b[c(F,F,T)]
-
   return(ECOTRON)
 }
+
+### Function: Plot data ###
 
 plotEcotronData <- function(ECOTRON1, ECOTRON2, ECOTRON3, variable, start, end) {
 
   ### Slice data, define start date and end date
   # TODO: Change actual start and end date
-  
   
   ECOTRON1<- subset(ECOTRON1, ECOTRON1$Date >=start &
                         ECOTRON1$Date <= end)
@@ -51,29 +43,34 @@ plotEcotronData <- function(ECOTRON1, ECOTRON2, ECOTRON3, variable, start, end) 
                       ECOTRON2$Date <= end)
   ECOTRON3<- subset(ECOTRON3, ECOTRON3$Date >=start &
                       ECOTRON3$Date <= end)
-  
-  # Temperatur
+  # Plotting
+  # scale hard coded
   plot(ECOTRON1[[variable]] ~ ECOTRON1$Date, type="l", 
-       col="green",format="%Y-%m-%d %H:%M:%S")
-  lines(ECOTRON2[[variable]]~ECOTRON2$Date, col="red")
-  lines(ECOTRON3[[variable]]~ECOTRON3$Date, col="blue")
+       col="green",format="%Y-%m-%d %H:%M:%S", ylim=c(10,40), xlab="Date, Time", ylab=variable)
+  lines(ECOTRON2[[variable]] ~ ECOTRON2$Date, col="red")
+  lines(ECOTRON3[[variable]] ~ ECOTRON3$Date, col="blue")
   legend("topright", title=paste(variable, " Measurement", sep=""), c("ECO1", "ECO2", "ECO3"), fill=c("green","red","blue"), 
          bg = "gray90", cex=0.8, inset=.05)
 }
+
+
+### Read in data with respective API keys ###
 
 ECOTRON1 <- getCSVData(318, "KYYV1D41TADHWA6X")
 ECOTRON2 <- getCSVData(319, "BJT4PQDOKAWQVGAD")
 ECOTRON3 <- getCSVData(320, "G03E8ZGJNU37MVMZ")
 
+# Set in and out dates for all
+start_date <- '2018-09-01 09:00:00'
+end_date <- '2018-09-01 13:00:00'
 
-plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "Dummy")
-plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "Temperature",'2018-08-31 18:00:00', '2018-08-31 22:00:00')
-plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "Humidity")
-plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "Pressure")
-plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "CO2")
-plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "Light")
-plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "SoilMoisture")
-plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "AirQuality")
+plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "Temperature", start_date, end_date)
+plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "Humidity", start_date, end_date)
+plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "Pressure", start_date, end_date)
+plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "CO2", start_date, end_date)
+plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "Light", start_date, end_date)
+plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "SoilMoisture", start_date, end_date)
+plotEcotronData(ECOTRON1, ECOTRON2, ECOTRON3, "AirQuality", start_date, end_date)
 
 
 
