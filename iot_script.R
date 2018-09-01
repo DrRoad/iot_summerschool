@@ -23,6 +23,18 @@ getCSVData <-  function(channel,api_key) {
   # Change timezone
   ECOTRON$Date <- with_tz(ECOTRON$Date, "CET")
   
+  ### Slice data, define start date and end date
+  # start: 31.8.2018, 6pm
+  # end: 1.9.2018, 9am
+  # TODO: Change actual start and end date
+  
+  
+  ECOTRONsub<- subset(ECOTRON, ECOTRON$Date >='2018-08-31 13:15:02' &
+                        ECOTRON$Date <= '2018-08-31 14:00:36')
+  
+  # Fix temperatures
+  ECOTRON$Temperature1 <- ECOTRON$b[c(T,T,F)]
+  ECOTRON$Temperature2 <- ECOTRON$b[c(F,F,T)]
 
   return(ECOTRON)
 }
